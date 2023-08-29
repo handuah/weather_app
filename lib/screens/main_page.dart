@@ -74,7 +74,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: weatherData.isNotEmpty && forecastData.isNotEmpty ? SingleChildScrollView (
           child: Container(
             height: size.height,
             width: size.width,
@@ -525,6 +525,13 @@ class _CurrentWeatherState extends State<CurrentWeather> {
               ),
             ),
           ),
+        ):  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+           CircularProgressIndicator(),
+            Text('Getting Weather Data'),
+          ],
         ),
       ),
     );
