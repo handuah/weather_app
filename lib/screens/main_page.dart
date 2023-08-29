@@ -115,12 +115,37 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                     ),
                   ),
                   SizedBox(
+                    height: size.height * 0.05,
+                  ),
+                  Text(
+                    'Accra, Ghana',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.height * 0.028,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
                     height: size.height * 0.02,
                   ),
-                  Container(
-                    height: size.height * 0.4,
-                    width: size.width,
-                    color: Colors.white,
+                  SizedBox(
+                    height: 200,
+                    child: OverflowBox(
+                      minHeight: 200,
+                      maxHeight: 200,
+                      child: cloudy,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  Text(
+                    '29 Degrees Celsius',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.height * 0.028,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(
                     height: size.height * 0.02,
@@ -129,7 +154,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                     'Very Cloudy',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: size.height * 0.032,
+                      fontSize: size.height * 0.028,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
