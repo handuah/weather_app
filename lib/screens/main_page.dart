@@ -159,14 +159,104 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                   SizedBox(
                     height: size.height * 0.02,
                   ),
-                  SizedBox(
-                    height: size.height * 0.3,
-                    child: OverflowBox(
-                      minHeight: size.height * 0.3,
-                      maxHeight: size.height * 0.3,
-                      child: cloudy,
-                    ),
-                  ),
+             
+                          weatherData[0]['current']['condition']['text'] ==
+                              'Mist' ||
+                          weatherData[0]['current']['condition']['text'] ==
+                              'Fog' 
+                      ? SizedBox(
+                          height: size.height * 0.3,
+                          child: OverflowBox(
+                            minHeight: size.height * 0.3,
+                            maxHeight: size.height * 0.3,
+                            child: mist,
+                          ),
+                        )
+                      : weatherData[0]['current']['condition']['text'] == 'Partly cloudy' ||
+                          weatherData[0]['current']['condition']['text'] ==
+                              'Cloudy' ||
+                          weatherData[0]['current']['condition']['text'] ==
+                              'Mist' ||
+                          weatherData[0]['current']['condition']['text'] ==
+                              'Fog' ||
+                          weatherData[0]['current']['condition']['text'] ==
+                              'Overcast'
+                      ? SizedBox(
+                          height: size.height * 0.3,
+                          child: OverflowBox(
+                            minHeight: size.height * 0.3,
+                            maxHeight: size.height * 0.3,
+                            child: cloudy,
+                          ),
+                        )
+                      : weatherData[0]['current']['condition']['text'] == 'Patchy rain possible' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Patchy light rain' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Light rain' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Moderate rain at times' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Moderate rain' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Heavy rain at times' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Heavy rain' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Light rain shower' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Moderate or heavy rain shower' ||
+                              weatherData[0]['current']['condition']['text'] ==
+                                  'Torrential rain shower'
+                          ? SizedBox(
+                              height: size.height * 0.3,
+                              child: OverflowBox(
+                                minHeight: size.height * 0.3,
+                                maxHeight: size.height * 0.3,
+                                child: rain,
+                              ),
+                            )
+                          : weatherData[0]['current']['condition']['text'] ==
+                                      'Moderate or heavy rain with thunder' ||
+                                  weatherData[0]['current']['condition']['text'] ==
+                                      'Patchy light rain with thunder' ||
+                                  weatherData[0]['current']['condition']['text'] ==
+                                      'Thundery outbreaks possible'
+                              ? SizedBox(
+                                  height: size.height * 0.3,
+                                  child: OverflowBox(
+                                    minHeight: size.height * 0.3,
+                                    maxHeight: size.height * 0.3,
+                                    child: thunderstorm,
+                                  ),
+                                )
+                              : weatherData[0]['current']['condition']['text'] == 'Sunny' ||
+                                      weatherData[0]['current']['condition']['text'] == 'Clear'
+                                  ? SizedBox(
+                                      height: size.height * 0.3,
+                                      child: OverflowBox(
+                                        minHeight: size.height * 0.3,
+                                        maxHeight: size.height * 0.3,
+                                        child: sunny,
+                                      ),
+                                    )
+                                  : weatherData[0]['current']['condition']['text'] == 'Patchy snow possible' || weatherData[0]['current']['condition']['text'] == 'Blowing snow'
+                                      ? SizedBox(
+                                          height: size.height * 0.3,
+                                          child: OverflowBox(
+                                            minHeight: size.height * 0.3,
+                                            maxHeight: size.height * 0.3,
+                                            child: snow,
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          height: size.height * 0.3,
+                                          child: OverflowBox(
+                                            minHeight: size.height * 0.3,
+                                            maxHeight: size.height * 0.3,
+                                            child: sunny,
+                                          ),
+                                        ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),

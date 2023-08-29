@@ -27,8 +27,38 @@ const String API_KEY = 'dfce69c8d77f4714b29121448232908';
 // https://api.weatherapi.com/v1/current.json?q=accra&key=dfce69c8d77f4714b29121448232908
 
 // WEATHER LOTTIES
-LottieBuilder cloudy = Lottie.network(
-  'https://lottie.host/579a3008-8d5a-47a4-ab4e-c47926a50c52/kFegdlRhPs.json',
+LottieBuilder cloudy = Lottie.asset(
+  'assets/lotties/cloudy_lottie.json',
+  fit: BoxFit.cover,
+  alignment: Alignment.center,
+);
+
+LottieBuilder rain = Lottie.asset(
+  'assets/lotties/rain_lottie.json',
+  fit: BoxFit.cover,
+  alignment: Alignment.center,
+);
+
+LottieBuilder snow = Lottie.asset(
+  'assets/lotties/snow_lottie.json',
+  fit: BoxFit.cover,
+  alignment: Alignment.center,
+);
+
+LottieBuilder sunny = Lottie.asset(
+  'assets/lotties/sunny_lottie.json',
+  fit: BoxFit.cover,
+  alignment: Alignment.center,
+);
+
+LottieBuilder thunderstorm = Lottie.asset(
+  'assets/lotties/thunderstorm_1_lottie.json',
+  fit: BoxFit.cover,
+  alignment: Alignment.center,
+);
+
+LottieBuilder mist = Lottie.asset(
+  'assets/lotties/mist_lottie.json',
   fit: BoxFit.cover,
   alignment: Alignment.center,
 );
