@@ -41,7 +41,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
 
   Future getForecastWeather(String location) async {
     var res = await http.get(
-      Uri.parse('$base_url/forecast.json?q=paris&days=6&key=$API_KEY'),
+      Uri.parse('$base_url/forecast.json?q=$location&days=8&key=$API_KEY'),
     );
     var jsonbody = res.body;
     var jsonData = jsonDecode(jsonbody);
@@ -54,6 +54,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
     forecastData = forecastInfo!.entries.map((e) => forecastInfo).toList();
     // ignore: avoid_print
     print('ForeCast here --> $forecastData');
+    print(forecastData.length);
   }
 
   bool searching = false;
@@ -317,8 +318,8 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                                 height: size.height * 0.005,
                               ),
                               Text(
-                                Jiffy.parse(forecastData[0]['forecast']
-                                        ['forecastday'][0]['date'])
+                                Jiffy.parse(forecastData[index]['forecast']
+                                        ['forecastday'][index]['date'])
                                     .MMMMEEEEd
                                     .split(',')[0],
                                 style: TextStyle(
@@ -331,7 +332,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                                 height: size.height * 0.01,
                               ),
                               Text(
-                                '${forecastData[0]['forecast']['forecastday'][0]['day']['avgtemp_c']}\u00b0C',
+                                '${forecastData[index]['forecast']['forecastday'][index]['day']['maxtemp_c']}\u00b0C',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: size.height * 0.018,
@@ -350,7 +351,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                           width: size.width * 0.02,
                         );
                       },
-                      itemCount: 5,
+                      itemCount: forecastData.length,
                     ),
                   ),
                 ],
