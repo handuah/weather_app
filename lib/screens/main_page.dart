@@ -74,465 +74,481 @@ class _CurrentWeatherState extends State<CurrentWeather> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: weatherData.isNotEmpty && forecastData.isNotEmpty ? SingleChildScrollView (
-          child: Container(
-            height: size.height,
-            width: size.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                  'https://t3.ftcdn.net/jpg/00/86/56/12/360_F_86561234_8HJdzg2iBlPap18K38mbyetKfdw1oNrm.jpg',
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.04,
-                vertical: size.height * 0.02,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: size.height * 0.1,
-                    width: size.width,
-                    child: TextField(
-                      controller: _cityCountryCon,
-                      onChanged: (value) {
-                        // if (value.isNotEmpty) {
-                        //   if (value.contains(',')) {
-                        //     getCurrentWeather(
-                        //         value.split(',')[0], value.split(',')[1]);
-                        //   }
-                        // }
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter City or Country',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: Colors.amber),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: Colors.amber),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            getCurrentWeather(_cityCountryCon.text);
-                            getForecastWeather(_cityCountryCon.text);
-                          },
-                          child: Container(
-                            height: size.height * 0.07,
-                            width: size.width * 0.17,
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.0),
-                                bottomRight: Radius.circular(20.0),
-                              ),
-                            ),
-                            child: const Icon(
-                              Icons.search_outlined,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        prefixIcon: const Icon(Icons.pin_drop_outlined),
+        child: weatherData.isNotEmpty && forecastData.isNotEmpty
+            ? SingleChildScrollView(
+                child: Container(
+                  height: size.height,
+                  width: size.width,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://t3.ftcdn.net/jpg/00/86/56/12/360_F_86561234_8HJdzg2iBlPap18K38mbyetKfdw1oNrm.jpg',
                       ),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.04,
-                  ),
-                  Text(
-                    '${weatherData[0]['location']['name']} , ${weatherData[0]['location']['country']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.028,
-                      fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.04,
+                      vertical: size.height * 0.02,
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-
-                  weatherData[0]['current']['condition']['text'] == 'Mist' ||
-                          weatherData[0]['current']['condition']['text'] ==
-                              'Fog'
-                      ? SizedBox(
-                          height: size.height * 0.3,
-                          child: OverflowBox(
-                            minHeight: size.height * 0.3,
-                            maxHeight: size.height * 0.3,
-                            child: mist,
-                          ),
-                        )
-                      : weatherData[0]['current']['condition']['text'] == 'Partly cloudy' ||
-                              weatherData[0]['current']['condition']['text'] ==
-                                  'Cloudy' ||
-                              weatherData[0]['current']['condition']['text'] ==
-                                  'Overcast'
-                          ? SizedBox(
-                              height: size.height * 0.3,
-                              child: OverflowBox(
-                                minHeight: size.height * 0.3,
-                                maxHeight: size.height * 0.3,
-                                child: cloudy,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: size.height * 0.1,
+                          width: size.width,
+                          child: TextField(
+                            controller: _cityCountryCon,
+                            onChanged: (value) {
+                              // if (value.isNotEmpty) {
+                              //   if (value.contains(',')) {
+                              //     getCurrentWeather(
+                              //         value.split(',')[0], value.split(',')[1]);
+                              //   }
+                              // }
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter City or Country',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide(color: Colors.amber),
                               ),
-                            )
-                          : weatherData[0]['current']['condition']['text'] == 'Patchy rain possible' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Patchy light rain' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Light rain' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Moderate rain at times' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Moderate rain' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Heavy rain at times' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Heavy rain' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Light rain shower' ||
-                                  weatherData[0]['current']['condition']['text'] ==
-                                      'Moderate or heavy rain shower' ||
-                                  weatherData[0]['current']['condition']
-                                          ['text'] ==
-                                      'Torrential rain shower'
-                              ? SizedBox(
-                                  height: size.height * 0.3,
-                                  child: OverflowBox(
-                                    minHeight: size.height * 0.3,
-                                    maxHeight: size.height * 0.3,
-                                    child: rain,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide(color: Colors.amber),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  getCurrentWeather(_cityCountryCon.text);
+                                  getForecastWeather(_cityCountryCon.text);
+                                },
+                                child: Container(
+                                  height: size.height * 0.07,
+                                  width: size.width * 0.17,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(20.0),
+                                      bottomRight: Radius.circular(20.0),
+                                    ),
                                   ),
-                                )
-                              : weatherData[0]['current']['condition']['text'] == 'Moderate or heavy rain with thunder' ||
-                                      weatherData[0]['current']['condition']['text'] == 'Patchy light rain with thunder' ||
-                                      weatherData[0]['current']['condition']['text'] == 'Thundery outbreaks possible'
-                                  ? SizedBox(
-                                      height: size.height * 0.3,
-                                      child: OverflowBox(
-                                        minHeight: size.height * 0.3,
-                                        maxHeight: size.height * 0.3,
-                                        child: thunderstorm,
-                                      ),
-                                    )
-                                  : weatherData[0]['current']['condition']['text'] == 'Sunny' || weatherData[0]['current']['condition']['text'] == 'Clear'
-                                      ? SizedBox(
-                                          height: size.height * 0.3,
-                                          child: OverflowBox(
-                                            minHeight: size.height * 0.3,
-                                            maxHeight: size.height * 0.3,
-                                            child: sunny,
-                                          ),
-                                        )
-                                      : weatherData[0]['current']['condition']['text'] == 'Patchy snow possible' || weatherData[0]['current']['condition']['text'] == 'Blowing snow'
-                                          ? SizedBox(
-                                              height: size.height * 0.3,
-                                              child: OverflowBox(
-                                                minHeight: size.height * 0.3,
-                                                maxHeight: size.height * 0.3,
-                                                child: snow,
-                                              ),
-                                            )
-                                          : SizedBox(
-                                              height: size.height * 0.3,
-                                              child: OverflowBox(
-                                                minHeight: size.height * 0.3,
-                                                maxHeight: size.height * 0.3,
-                                                child: sunny,
-                                              ),
-                                            ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  // for (var weather in weatherData)
-                  Text(
-                    '${weatherData[0]['current']['temp_c']}\u00b0C',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.040,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.01,
-                  ),
-                  Text(
-                    '${weatherData[0]['current']['condition']['text']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.022,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.wind_power_outlined,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            '${weatherData[0]['current']['wind_kph']}km',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: size.height * 0.022,
-                              fontWeight: FontWeight.bold,
+                                  child: const Icon(
+                                    Icons.search_outlined,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              prefixIcon: const Icon(Icons.pin_drop_outlined),
                             ),
                           ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.water_drop_outlined,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            '${weatherData[0]['current']['wind_kph']}km',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: size.height * 0.022,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.watch_outlined,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            Jiffy.parse(weatherData[0]['location']['localtime']
-                                    .toString())
-                                .Hm,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: size.height * 0.022,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.calendar_month_outlined,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: size.width * 0.02,
-                      ),
-                      Text(
-                        'Daily Forecast',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: size.height * 0.018,
-                          fontWeight: FontWeight.normal,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: size.width * 0.02,
-                  ),
-                  Container(
-                    height: size.height * 0.2,
-                    width: size.width,
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: ListView.separated(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.02,
-                        vertical: size.height * 0.01,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) {
-                        return Container(
-                          height: size.height * 0.2,
-                          width: size.width * 0.3,
-                          decoration: BoxDecoration(
-                            color: Colors.amber.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(20.0),
+                        SizedBox(
+                          height: size.height * 0.04,
+                        ),
+                        Text(
+                          '${weatherData[0]['location']['name']} , ${weatherData[0]['location']['country']}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size.height * 0.028,
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Mist' ||
-                                      forecastData[index]['forecast']['forecastday'][index]
-                                              ['day']['condition']['text'] ==
-                                          'Fog'
-                                  ? SizedBox(
-                                      height: size.height * 0.1,
-                                      child: OverflowBox(
-                                        minHeight: size.height * 0.1,
-                                        maxHeight: size.height * 0.1,
-                                        child: mist,
-                                      ),
-                                    )
-                                  : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Partly cloudy' ||
-                                          forecastData[index]['forecast']['forecastday'][index]['day']
-                                                  ['condition']['text'] ==
-                                              'Cloudy' ||
-                                          forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] ==
-                                              'Overcast'
-                                      ? SizedBox(
-                                          height: size.height * 0.1,
-                                          child: OverflowBox(
-                                            minHeight: size.height * 0.1,
-                                            maxHeight: size.height * 0.1,
-                                            child: cloudy,
-                                          ),
-                                        )
-                                      : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Patchy rain possible' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Patchy light rain' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Light rain' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate rain at times' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate rain' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Heavy rain at times' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Heavy rain' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Light rain shower' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate or heavy rain shower' ||
-                                              forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Torrential rain shower'
-                                          ? SizedBox(
-                                              height: size.height * 0.1,
-                                              child: OverflowBox(
-                                                minHeight: size.height * 0.1,
-                                                maxHeight: size.height * 0.1,
-                                                child: rain,
-                                              ),
-                                            )
-                                          : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate or heavy rain with thunder' || forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Patchy light rain with thunder' || forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Thundery outbreaks possible'
-                                              ? SizedBox(
-                                                  height: size.height * 0.1,
-                                                  child: OverflowBox(
-                                                    minHeight:
-                                                        size.height * 0.1,
-                                                    maxHeight:
-                                                        size.height * 0.1,
-                                                    child: thunderstorm,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+
+                        weatherData[0]['current']['condition']['text'] == 'Mist' ||
+                                weatherData[0]['current']['condition']['text'] ==
+                                    'Fog'
+                            ? SizedBox(
+                                height: size.height * 0.3,
+                                child: OverflowBox(
+                                  minHeight: size.height * 0.3,
+                                  maxHeight: size.height * 0.3,
+                                  child: mist,
+                                ),
+                              )
+                            : weatherData[0]['current']['condition']['text'] == 'Partly cloudy' ||
+                                    weatherData[0]['current']['condition']['text'] ==
+                                        'Cloudy' ||
+                                    weatherData[0]['current']['condition']['text'] ==
+                                        'Overcast'
+                                ? SizedBox(
+                                    height: size.height * 0.3,
+                                    child: OverflowBox(
+                                      minHeight: size.height * 0.3,
+                                      maxHeight: size.height * 0.3,
+                                      child: cloudy,
+                                    ),
+                                  )
+                                : weatherData[0]['current']['condition']['text'] ==
+                                            'Patchy rain possible' ||
+                                        weatherData[0]['current']['condition']['text'] ==
+                                            'Patchy light rain' ||
+                                        weatherData[0]['current']['condition']['text'] ==
+                                            'Light rain' ||
+                                        weatherData[0]['current']['condition']['text'] ==
+                                            'Moderate rain at times' ||
+                                        weatherData[0]['current']['condition']['text'] ==
+                                            'Moderate rain' ||
+                                        weatherData[0]['current']['condition']
+                                                ['text'] ==
+                                            'Heavy rain at times' ||
+                                        weatherData[0]['current']['condition']['text'] == 'Heavy rain' ||
+                                        weatherData[0]['current']['condition']['text'] == 'Light rain shower' ||
+                                        weatherData[0]['current']['condition']['text'] == 'Moderate or heavy rain shower' ||
+                                        weatherData[0]['current']['condition']['text'] == 'Torrential rain shower'
+                                    ? SizedBox(
+                                        height: size.height * 0.3,
+                                        child: OverflowBox(
+                                          minHeight: size.height * 0.3,
+                                          maxHeight: size.height * 0.3,
+                                          child: rain,
+                                        ),
+                                      )
+                                    : weatherData[0]['current']['condition']['text'] == 'Moderate or heavy rain with thunder' || weatherData[0]['current']['condition']['text'] == 'Patchy light rain with thunder' || weatherData[0]['current']['condition']['text'] == 'Thundery outbreaks possible'
+                                        ? SizedBox(
+                                            height: size.height * 0.3,
+                                            child: OverflowBox(
+                                              minHeight: size.height * 0.3,
+                                              maxHeight: size.height * 0.3,
+                                              child: thunderstorm,
+                                            ),
+                                          )
+                                        : weatherData[0]['current']['condition']['text'] == 'Sunny' || weatherData[0]['current']['condition']['text'] == 'Clear'
+                                            ? SizedBox(
+                                                height: size.height * 0.3,
+                                                child: OverflowBox(
+                                                  minHeight: size.height * 0.3,
+                                                  maxHeight: size.height * 0.3,
+                                                  child: sunny,
+                                                ),
+                                              )
+                                            : weatherData[0]['current']['condition']['text'] == 'Patchy snow possible' || weatherData[0]['current']['condition']['text'] == 'Blowing snow'
+                                                ? SizedBox(
+                                                    height: size.height * 0.3,
+                                                    child: OverflowBox(
+                                                      minHeight:
+                                                          size.height * 0.3,
+                                                      maxHeight:
+                                                          size.height * 0.3,
+                                                      child: snow,
+                                                    ),
+                                                  )
+                                                : SizedBox(
+                                                    height: size.height * 0.3,
+                                                    child: OverflowBox(
+                                                      minHeight:
+                                                          size.height * 0.3,
+                                                      maxHeight:
+                                                          size.height * 0.3,
+                                                      child: sunny,
+                                                    ),
                                                   ),
-                                                )
-                                              : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Sunny' || forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Clear'
-                                                  ? SizedBox(
-                                                      height: size.height * 0.1,
-                                                      child: OverflowBox(
-                                                        minHeight:
-                                                            size.height * 0.1,
-                                                        maxHeight:
-                                                            size.height * 0.1,
-                                                        child: sunny,
-                                                      ),
-                                                    )
-                                                  : weatherData[0]['current']['condition']['text'] == 'Patchy snow possible' || weatherData[0]['current']['condition']['text'] == 'Blowing snow'
-                                                      ? SizedBox(
-                                                          height:
-                                                              size.height * 0.1,
-                                                          child: OverflowBox(
-                                                            minHeight:
-                                                                size.height *
-                                                                    0.1,
-                                                            maxHeight:
-                                                                size.height *
-                                                                    0.1,
-                                                            child: snow,
-                                                          ),
-                                                        )
-                                                      : SizedBox(
-                                                          height:
-                                                              size.height * 0.1,
-                                                          child: OverflowBox(
-                                                            minHeight:
-                                                                size.height *
-                                                                    0.1,
-                                                            maxHeight:
-                                                                size.height *
-                                                                    0.1,
-                                                            child: sunny,
-                                                          ),
-                                                        ),
-                              SizedBox(
-                                height: size.height * 0.005,
-                              ),
-                              Text(
-                                Jiffy.parse(forecastData[index]['forecast']
-                                        ['forecastday'][index]['date'])
-                                    .MMMMEEEEd
-                                    .split(',')[0],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: size.height * 0.018,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              SizedBox(
-                                height: size.height * 0.01,
-                              ),
-                              Text(
-                                '${forecastData[index]['forecast']['forecastday'][index]['day']['maxtemp_c']}\u00b0C',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: size.height * 0.018,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              SizedBox(
-                                height: size.height * 0.02,
-                              ),
-                            ],
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        // for (var weather in weatherData)
+                        Text(
+                          '${weatherData[0]['current']['temp_c']}\u00b0C',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size.height * 0.040,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      }),
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        Text(
+                          '${weatherData[0]['current']['condition']['text']}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size.height * 0.022,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.wind_power_outlined,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  '${weatherData[0]['current']['wind_kph']}km',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: size.height * 0.022,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.water_drop_outlined,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  '${weatherData[0]['current']['wind_kph']}km',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: size.height * 0.022,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.watch_outlined,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  Jiffy.parse(weatherData[0]['location']
+                                              ['localtime']
+                                          .toString())
+                                      .Hm,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: size.height * 0.022,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.calendar_month_outlined,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: size.width * 0.02,
+                            ),
+                            Text(
+                              'Daily Forecast',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size.height * 0.018,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
                           width: size.width * 0.02,
-                        );
-                      },
-                      itemCount: forecastData.length,
+                        ),
+                        Container(
+                          height: size.height * 0.2,
+                          width: size.width,
+                          decoration: const BoxDecoration(
+                            color: Colors.transparent,
+                          ),
+                          child: ListView.separated(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.02,
+                              vertical: size.height * 0.01,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: ((context, index) {
+                              return Container(
+                                height: size.height * 0.2,
+                                width: size.width * 0.3,
+                                decoration: BoxDecoration(
+                                  color: Colors.amber.withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Mist' ||
+                                            forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] ==
+                                                'Fog'
+                                        ? SizedBox(
+                                            height: size.height * 0.1,
+                                            child: OverflowBox(
+                                              minHeight: size.height * 0.1,
+                                              maxHeight: size.height * 0.1,
+                                              child: mist,
+                                            ),
+                                          )
+                                        : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Partly cloudy' ||
+                                                forecastData[index]['forecast']['forecastday'][index]['day']
+                                                        ['condition']['text'] ==
+                                                    'Cloudy' ||
+                                                forecastData[index]['forecast']['forecastday'][index]['day']
+                                                        ['condition']['text'] ==
+                                                    'Overcast'
+                                            ? SizedBox(
+                                                height: size.height * 0.1,
+                                                child: OverflowBox(
+                                                  minHeight: size.height * 0.1,
+                                                  maxHeight: size.height * 0.1,
+                                                  child: cloudy,
+                                                ),
+                                              )
+                                            : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Patchy rain possible' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Patchy light rain' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Light rain' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate rain at times' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate rain' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Heavy rain at times' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Heavy rain' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Light rain shower' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate or heavy rain shower' ||
+                                                    forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Torrential rain shower'
+                                                ? SizedBox(
+                                                    height: size.height * 0.1,
+                                                    child: OverflowBox(
+                                                      minHeight:
+                                                          size.height * 0.1,
+                                                      maxHeight:
+                                                          size.height * 0.1,
+                                                      child: rain,
+                                                    ),
+                                                  )
+                                                : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Moderate or heavy rain with thunder' || forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Patchy light rain with thunder' || forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Thundery outbreaks possible'
+                                                    ? SizedBox(
+                                                        height:
+                                                            size.height * 0.1,
+                                                        child: OverflowBox(
+                                                          minHeight:
+                                                              size.height * 0.1,
+                                                          maxHeight:
+                                                              size.height * 0.1,
+                                                          child: thunderstorm,
+                                                        ),
+                                                      )
+                                                    : forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Sunny' || forecastData[index]['forecast']['forecastday'][index]['day']['condition']['text'] == 'Clear'
+                                                        ? SizedBox(
+                                                            height:
+                                                                size.height *
+                                                                    0.1,
+                                                            child: OverflowBox(
+                                                              minHeight:
+                                                                  size.height *
+                                                                      0.1,
+                                                              maxHeight:
+                                                                  size.height *
+                                                                      0.1,
+                                                              child: sunny,
+                                                            ),
+                                                          )
+                                                        : weatherData[0]['current']['condition']['text'] == 'Patchy snow possible' || weatherData[0]['current']['condition']['text'] == 'Blowing snow'
+                                                            ? SizedBox(
+                                                                height:
+                                                                    size.height *
+                                                                        0.1,
+                                                                child:
+                                                                    OverflowBox(
+                                                                  minHeight:
+                                                                      size.height *
+                                                                          0.1,
+                                                                  maxHeight:
+                                                                      size.height *
+                                                                          0.1,
+                                                                  child: snow,
+                                                                ),
+                                                              )
+                                                            : SizedBox(
+                                                                height:
+                                                                    size.height *
+                                                                        0.1,
+                                                                child:
+                                                                    OverflowBox(
+                                                                  minHeight:
+                                                                      size.height *
+                                                                          0.1,
+                                                                  maxHeight:
+                                                                      size.height *
+                                                                          0.1,
+                                                                  child: sunny,
+                                                                ),
+                                                              ),
+                                    SizedBox(
+                                      height: size.height * 0.005,
+                                    ),
+                                    Text(
+                                      Jiffy.parse(forecastData[index]
+                                                  ['forecast']['forecastday']
+                                              [index]['date'])
+                                          .MMMMEEEEd
+                                          .split(',')[0],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.height * 0.018,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      '${forecastData[index]['forecast']['forecastday'][index]['day']['maxtemp_c']}\u00b0C',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.height * 0.018,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.02,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                width: size.width * 0.02,
+                              );
+                            },
+                            itemCount: forecastData.length,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
+              )
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(),
+                    Text('Getting Weather Data'),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ):  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-           CircularProgressIndicator(),
-            Text('Getting Weather Data'),
-          ],
-        ),
       ),
     );
   }
