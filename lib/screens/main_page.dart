@@ -17,8 +17,10 @@ class _CurrentWeatherState extends State<CurrentWeather> {
   final TextEditingController _cityCountryCon = TextEditingController();
 
   Map? weatherInfo;
+  Map? forecastInfo;
 
   List weatherData = [];
+  List forecastData = [];
 
   Future getCurrentWeather(String location) async {
     var res = await http.get(
@@ -37,7 +39,33 @@ class _CurrentWeatherState extends State<CurrentWeather> {
     print('Weatherdata here --> $weatherData');
   }
 
+  Future getForecastWeather(String location) async {
+    var res = await http.get(
+      Uri.parse('$base_url/forecast.json?q=paris&days=6&key=$API_KEY'),
+    );
+    var jsonbody = res.body;
+    var jsonData = jsonDecode(jsonbody);
+
+    print(jsonData.runtimeType);
+
+    setState(() {
+      forecastInfo = jsonData as Map;
+    });
+    forecastData = forecastInfo!.entries.map((e) => forecastInfo).toList();
+    // ignore: avoid_print
+    print('ForeCast here --> $forecastData');
+  }
+
   bool searching = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //on initial set the location to Accra
+    getCurrentWeather('Accra');
+    getForecastWeather('Accra');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +122,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                         suffixIcon: GestureDetector(
                           onTap: () {
                             getCurrentWeather(_cityCountryCon.text);
+                            getForecastWeather(_cityCountryCon.text);
                           },
                           child: Container(
                             height: size.height * 0.07,
@@ -116,10 +145,10 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.05,
+                    height: size.height * 0.04,
                   ),
                   Text(
-                    '${weatherData[0]['location']['name']} , ${weatherData[0]['location']['country']} ',
+                    '${weatherData[0]['location']['name']} , ${weatherData[0]['location']['country']}',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: size.height * 0.028,
@@ -130,10 +159,10 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                     height: size.height * 0.02,
                   ),
                   SizedBox(
-                    height: 200,
+                    height: size.height * 0.3,
                     child: OverflowBox(
-                      minHeight: 200,
-                      maxHeight: 200,
+                      minHeight: size.height * 0.3,
+                      maxHeight: size.height * 0.3,
                       child: cloudy,
                     ),
                   ),
@@ -224,6 +253,105 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                         ],
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.calendar_month_outlined,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: size.width * 0.02,
+                      ),
+                      Text(
+                        'Daily Forecast',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.height * 0.018,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: size.width * 0.02,
+                  ),
+                  Container(
+                    height: size.height * 0.2,
+                    width: size.width,
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: ListView.separated(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.02,
+                        vertical: size.height * 0.01,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: ((context, index) {
+                        return Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.3,
+                          decoration: BoxDecoration(
+                            color: Colors.amber.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: size.height * 0.1,
+                                child: OverflowBox(
+                                  minHeight: size.height * 0.1,
+                                  maxHeight: size.height * 0.1,
+                                  child: cloudy,
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.height * 0.005,
+                              ),
+                              Text(
+                                Jiffy.parse(forecastData[0]['forecast']
+                                        ['forecastday'][0]['date'])
+                                    .MMMMEEEEd
+                                    .split(',')[0],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size.height * 0.018,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+                              Text(
+                                '${forecastData[0]['forecast']['forecastday'][0]['day']['avgtemp_c']}\u00b0C',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size.height * 0.018,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.height * 0.02,
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          width: size.width * 0.02,
+                        );
+                      },
+                      itemCount: 5,
+                    ),
                   ),
                 ],
               ),
