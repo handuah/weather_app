@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:jiffy/jiffy.dart';
 
 import '../utils/constants.dart';
 
@@ -15,12 +16,13 @@ class CurrentWeather extends StatefulWidget {
 class _CurrentWeatherState extends State<CurrentWeather> {
   final TextEditingController _cityCountryCon = TextEditingController();
 
+  Map? weatherInfo;
+
   List weatherData = [];
 
-  Future getCurrentWeather(String? citiName, String countryName) async {
+  Future getCurrentWeather(String location) async {
     var res = await http.get(
-      Uri.parse(
-          '$base_url/current?city=$citiName&country=$countryName&key=$API_KEY'),
+      Uri.parse('$base_url/current.json?q=$location&key=$API_KEY'),
     );
     var jsonbody = res.body;
     var jsonData = jsonDecode(jsonbody);
@@ -28,8 +30,9 @@ class _CurrentWeatherState extends State<CurrentWeather> {
     print(jsonData.runtimeType);
 
     setState(() {
-      weatherData = jsonData['data'];
+      weatherInfo = jsonData as Map;
     });
+    weatherData = weatherInfo!.entries.map((e) => weatherInfo).toList();
     // ignore: avoid_print
     print('Weatherdata here --> $weatherData');
   }
@@ -90,9 +93,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                         filled: true,
                         suffixIcon: GestureDetector(
                           onTap: () {
-                            getCurrentWeather(
-                                _cityCountryCon.text.split(',')[0],
-                                _cityCountryCon.text..split(',')[1]);
+                            getCurrentWeather(_cityCountryCon.text);
                           },
                           child: Container(
                             height: size.height * 0.07,
@@ -118,7 +119,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                     height: size.height * 0.05,
                   ),
                   Text(
-                    'Accra, Ghana',
+                    '${weatherData[0]['location']['name']} , ${weatherData[0]['location']['country']} ',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: size.height * 0.028,
@@ -139,24 +140,90 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                   SizedBox(
                     height: size.height * 0.02,
                   ),
+                  // for (var weather in weatherData)
                   Text(
-                    '29 Degrees Celsius',
+                    '${weatherData[0]['current']['temp_c']}\u00b0C',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: size.height * 0.028,
+                      fontSize: size.height * 0.040,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.02,
+                    height: size.height * 0.01,
                   ),
                   Text(
-                    'Very Cloudy',
+                    '${weatherData[0]['current']['condition']['text']}',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: size.height * 0.028,
-                      fontWeight: FontWeight.bold,
+                      fontSize: size.height * 0.022,
+                      fontWeight: FontWeight.normal,
                     ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.wind_power_outlined,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            '${weatherData[0]['current']['wind_kph']}km',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size.height * 0.022,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.water_drop_outlined,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            '${weatherData[0]['current']['wind_kph']}km',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size.height * 0.022,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.watch_outlined,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            Jiffy.parse(weatherData[0]['location']['localtime']
+                                    .toString())
+                                .Hm,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size.height * 0.022,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
