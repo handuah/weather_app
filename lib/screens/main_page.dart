@@ -100,16 +100,16 @@ Future getAutoComplete(String location) async {
                 child: Container(
                   height: size.height,
                   width: size.width,
-                  decoration: BoxDecoration(
-                    //   image: DecorationImage(
-                    //     image: NetworkImage(
-                    //       'https://t3.ftcdn.net/jpg/00/86/56/12/360_F_86561234_8HJdzg2iBlPap18K38mbyetKfdw1oNrm.jpg',
-                    //     ),
-                    //     fit: BoxFit.cover,
-                    //   ),
-                    // ),
-                    color: HexColor('#023e8a'),
-                  ),
+                  decoration:const BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          'https://t3.ftcdn.net/jpg/00/86/56/12/360_F_86561234_8HJdzg2iBlPap18K38mbyetKfdw1oNrm.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    // color: HexColor('#023e8a'),
+                  
                   child: Stack(
                     children:[ Padding(
                       padding: EdgeInsets.symmetric(
@@ -125,6 +125,7 @@ Future getAutoComplete(String location) async {
                             width: size.width,
                             child: TextField(
                               controller: _cityCountryCon,
+                              // keyboardType: searching? TextInputType.text : TextInputType.none,
                               onChanged: (value) {
                                 if (value.isNotEmpty && value.characters.length > 3) {
                                   setState(() {
@@ -155,9 +156,10 @@ Future getAutoComplete(String location) async {
                                   onTap: () {
                                     getCurrentWeather(_cityCountryCon.text);
                                     getForecastWeather(_cityCountryCon.text);
-                                    setState({
-                                      _cityCountryCon.clear();
+                                    setState(() {
+                                         _cityCountryCon.clear();
                                     });
+                                 
                                   },
                                   child: Container(
                                     height: size.height * 0.07,
