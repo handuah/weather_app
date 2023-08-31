@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:jiffy/jiffy.dart';
 
@@ -64,8 +65,8 @@ class _CurrentWeatherState extends State<CurrentWeather> {
     super.initState();
 
     //on initial set the location to Accra
-    getCurrentWeather('Accra');
-    getForecastWeather('Accra');
+    getCurrentWeather('Johannesburg');
+    getForecastWeather('Johannesburg');
   }
 
   @override
@@ -79,13 +80,15 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                 child: Container(
                   height: size.height,
                   width: size.width,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        'https://t3.ftcdn.net/jpg/00/86/56/12/360_F_86561234_8HJdzg2iBlPap18K38mbyetKfdw1oNrm.jpg',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                  decoration: BoxDecoration(
+                    //   image: DecorationImage(
+                    //     image: NetworkImage(
+                    //       'https://t3.ftcdn.net/jpg/00/86/56/12/360_F_86561234_8HJdzg2iBlPap18K38mbyetKfdw1oNrm.jpg',
+                    //     ),
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    // ),
+                    color: HexColor('#023e8a'),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -324,10 +327,13 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  Jiffy.parse(weatherData[0]['location']
-                                              ['localtime']
-                                          .toString())
-                                      .Hm,
+                                  // Jiffy.parse(weatherData[0]['location']
+                                  //             ['localtime']
+                                  //         .toString())
+                                  //     .Hm,
+                                  weatherData[0]['location']['localtime']
+                                      .toString()
+                                      .split(' ')[1],
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: size.height * 0.022,
