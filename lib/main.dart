@@ -6,7 +6,7 @@ void main() {
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     // systemNavigationBarColor: Colors.amber.withOpacity(0.6),
-    statusBarColor: Colors.transparent,
+    statusBarColor: Colors.black,
   ));
 }
 

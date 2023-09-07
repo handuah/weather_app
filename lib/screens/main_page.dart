@@ -102,11 +102,16 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                   height: size.height,
                   width: size.width,
                   decoration: const BoxDecoration(
+                    color: Colors.black12,
+                    backgroundBlendMode: BlendMode.darken,
                     image: DecorationImage(
+                     
                       image: NetworkImage(
                         'https://www.huntsmarine.com.au/cdn/shop/articles/Looking-at-the-clouds-can-help-you-predict-bad-weather-_697_6052888_0_14103285_1000_1024x1024.jpg?v=1500990343',
+            
                       ),
                       fit: BoxFit.cover,
+                    
                     ),
                   ),
                   // color: HexColor('#023e8a'),
