@@ -607,56 +607,105 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                             ? Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: size.width * 0.02),
-                                child: Container(
-                                  height: size.height * 0.08,
-                                  width: size.width * 0.9,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    color: Colors.white,
-                                  ),
-                                  child: ListView.separated(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: size.width * 0.02,
-                                      vertical: size.height * 0.024,
-                                    ),
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
+                                // child: Container(
+                                //   height: size.height * 0.08,
+                                //   width: size.width * 0.9,
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(20.0),
+                                //     color: Colors.white,
+                                //   ),
+                                //   child: ListView.separated(
+                                //     padding: EdgeInsets.symmetric(
+                                //       horizontal: size.width * 0.02,
+                                //       vertical: size.height * 0.024,
+                                //     ),
+                                //     itemBuilder: (context, index) {
+                                //       return GestureDetector(
+                                //         onTap: () {
+                                //           setState(() {
+                                //             _cityCountryCon.text =
+                                //                 '${autoCompleteList[index]['name']}, ${autoCompleteList[index]['country']}';
+                                //             searching = false;
+                                //           });
+                                //         },
+                                //         child: Row(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment.start,
+                                //           crossAxisAlignment:
+                                //               CrossAxisAlignment.start,
+                                //           children: [
+                                //             const Icon(
+                                //               Icons.pin_drop_outlined,
+                                //               color: Colors.grey,
+                                //             ),
+                                //             Text(
+                                //               '${autoCompleteList[index]['name']}, ${autoCompleteList[index]['country']}',
+                                //               style: TextStyle(
+                                //                 color: Colors.black,
+                                //                 fontSize: size.height * 0.020,
+                                //                 fontWeight: FontWeight.normal,
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       );
+                                //     },
+                                //     separatorBuilder: (context, index) {
+                                //       return const Divider();
+                                //     },
+                                //     itemCount: autoCompleteList.length,
+                                //   ),
+                                // ),
+                             
+                             child: Column( 
+                                      mainAxisAlignment: MainAxisAlignment.start, 
+                                      crossAxisAlignment: CrossAxisAlignment.start, 
+                                      children: [
+                                        for(var autocomplete in autoCompleteList)
+                                                         GestureDetector(
                                         onTap: () {
                                           setState(() {
                                             _cityCountryCon.text =
-                                                '${autoCompleteList[index]['name']}, ${autoCompleteList[index]['country']}';
+                                                '${autocomplete['name']}, ${autocomplete['country']}';
                                             searching = false;
                                           });
                                         },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Icon(
-                                              Icons.pin_drop_outlined,
-                                              color: Colors.grey,
+                                        child: Container(
+                                              height: size.height * 0.04,
+                                  width: size.width * 0.9,
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.02,
+                                    vertical: size.height * 0.02,  ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Icon(
+                                                  Icons.pin_drop_outlined,
+                                                  color: Colors.grey,
+                                                ),
+                                                Text(
+                                                  '${autocomplete['name']}, ${autocomplete['country']}',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: size.height * 0.020,
+                                                    fontWeight: FontWeight.normal,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              '${autoCompleteList[index]['name']}, ${autoCompleteList[index]['country']}',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: size.height * 0.020,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return const Divider();
-                                    },
-                                    itemCount: autoCompleteList.length,
-                                  ),
-                                ),
+                                      ),
+                                      ],
+                                 ),
+                             
                               )
+                           
                             : const Center(),
                       ),
                     ],
