@@ -671,7 +671,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                                           });
                                         },
                                         child: Container(
-                                              height: size.height * 0.04,
+                                              height: size.height * 0.06,
                                   width: size.width * 0.9,
                                   color: Color.fromRGBO(255, 255, 255, 1),
                                           child: Padding(
