@@ -123,7 +123,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                           horizontal: size.width * 0.04,
                           vertical: size.height * 0.02,
                         ),
-                        child: Column(
+                        child:  Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -717,7 +717,8 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(),
+                    sunny,
+                    // CircularProgressIndicator(),
                     SizedBox(height: size.height * 0.04),
                     Text(
                       'Getting Weather Data',
